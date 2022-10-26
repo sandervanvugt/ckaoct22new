@@ -1,0 +1,20 @@
+419  kubectl get all
+  420  sudo apt update
+  421  sudo apt-cache madison kubeadm
+  422  kubeadm version
+  423  sudo apt-mark unhold kubeadm && sudo apt-get update && sudo apt-get install -y kubeadm=1.25.3-00 && sudo apt-mark hold kubeadm
+  424  sudo ps aux | grep 5037
+  425  sudo kill -9 5037
+  426  sudo apt-mark unhold kubeadm && sudo apt-get update && sudo apt-get install -y kubeadm=1.25.3-00 && sudo apt-mark hold kubeadm
+  427  kubeadm version
+  428  sudo kubeadm upgrade plan
+  429  sudo kubeadm upgrade apply v1.25.3
+  430  kubectl get nodes
+  431  kubectl drain control --ignore-daemonsets
+  432  sudo apt-mark unhold kubelet kubectl && sudo apt-get update && sudo apt-get install -y kubelet=1.25.3-00 kubectl=1.25.3-00 && sudo apt-mark hold kubelet kubectl
+  433  sudo systemctl daemon-reload
+  434  sudo systemctl restart kubelet
+  435  kubectl uncordon control
+  436  kubectl get nodes
+  437  history
+

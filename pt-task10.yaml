@@ -1,0 +1,5 @@
+ubectl create ns viewers
+kubectl create role viewers --verb get --resource pods
+kubectl create serviceaccount viewers-sa --namespace roles
+kubectl create rolebinding viewers-rb --clusterrole=viewers --serviceaccount=roles:viewers-sa
+kubectl run viewpod --image busybox --dry-run=client -o yaml -- sleep 3600  | kubectl set serviceaccount viewers-sa --dry-run=client -o yaml --local -f - |  kubectl create -f -

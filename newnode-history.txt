@@ -1,0 +1,98 @@
+  441  kubectl get all 
+  442  kubectl get all -n kube-system
+  443  kubectl edit -n kube-system deploy metrics-server
+  444  kubectl top 
+  445  kubectl top pod
+  446  cka/counter.sh 20
+  447  kubectl get nodes
+  448  cka/counter.sh 5
+  449  kubectl get nodes -o=custom-columns=NodeName:.metadata.name,TaintKey:.spec.taints[*].key,TaintValue:.spec.taints[*].value,TaintEffect:.spec.taints[*].effect
+  450  #kubectl taint node controlplane node-role.kubernetes.io/control-plane:NoSchedule-
+  451  kubectl edit control
+  452  kubectl edit node control
+  453  kubectl get nodes -o=custom-columns=NodeName:.metadata.name,TaintKey:.spec.taints[*].key,TaintValue:.spec.taints[*].value,TaintEffect:.spec.taints[*].effect
+  454  kubectl edit node control
+  455  kubectl get nodes -o=custom-columns=NodeName:.metadata.name,TaintKey:.spec.taints[*].key,TaintValue:.spec.taints[*].value,TaintEffect:.spec.taints[*].effect
+  456  kubectl edit node control
+  457  kubectl taint node control node-role.kubernetes.io/control-plane:NoSchedule-
+  458  kubectl edit node control
+  459  kubectk get nodes
+  460  kubectl get nodes
+  461  kubectl create deploy tainttest --image=nginx --replicas=3
+  462  kubectl get pods -o wide
+  463  df -h
+  464  sudo ls -l /etc/kubernetes/manifests/
+  465  ip 
+  466  ip a
+  467  sudo cp /etc/kubernetes/admin.conf /tmp/admin.conf
+  468  ls -l /tmp/admin.conf
+  469  chmod o+r /tmp/admin.conf
+  470  sudo chmod o+r /tmp/admin.conf
+  471  ls -l .kube/config 
+  472  cd cka
+  473  vim selector-pod.yaml 
+  474  kubectl create -f selector-pod.yaml 
+  475  kubectl get pods -o wide
+  476  kubectl edit nodes worker1
+  477  kubectl taint nodes worker1 example-key=value1:NoSchedule
+  478  kubectl describe nodes worker1
+  479  kubectl describe nodes worker1 | less
+  480  kubectl create deploy nginx-taint --image=nginx
+  481  source <(kubectl completion bash)
+  482  kubectl scale deploy nginx-taint --replicas=4
+  483  kubectl get pods -o wide
+  484  vim taint-toleration.yaml 
+  485  kubectl edit nginx-taint
+  486  kubectl edit deploy nginx-taint
+  487  kubectl get pods -o wide
+  488  kubectl describe node control
+  489  kubectl describe node control | less
+  490  kubectl edit node control 
+  491  sudo df -h
+  492  sudo vgs
+  493  sudo lvs
+  494  sudo lvextend ubuntu-lv -r -l +100%FREE
+  495  sudo lvextend /dev/ubuntu-vg/ubuntu-lv -r -l +100%FREE
+  496  df -h
+  497  vim pod-with-node-affinity.yaml 
+  498  vim pod-with-pod-affinity.yaml 
+  499  vim redis-with-pod-affinity.yaml 
+  500  kubectl create -f redis-with-pod-affinity.yaml 
+  501  kubectl get pods
+  502  kubectl get pods -o wide
+  503  kubectl edit node worker1
+  504  kubectl get pods -o wide
+  505  vim webserver-with-pod-affinity.yaml 
+  506  kubectl create -f webserver-with-pod-affinity.yaml 
+  507  kubectl get pods -o wide
+  508  kubectl scale redis-cache --replicas=2; kubectl scale web-server --replicas=2
+  509  kubectl scale deploy redis-cache --replicas=2; kubectl scale deploy web-server --replicas=2
+  510  kubectl get pods -o wide
+  511  kubectl scale deploy redis-cache --replicas=1; kubectl scale deploy web-server --replicas=1
+  512  kubectl get pods -o wide
+  513  kubectl scale deploy redis-cache --replicas=2; kubectl scale deploy web-server --replicas=2
+  514  kubectl get pods -o wide
+  515  sudo apt install helm
+  516  sudo snap install helm
+  517  cd ..
+  518  tar xvf helm-v3.10.1-linux-amd64.tar.gz 
+  519  sudo mv linux-amd64/helm /usr/local/bin/
+  520  helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace
+  521  kubectl get all -n ingress-nginx 
+  522  kubectl create deploy nginxsvc --image=nginx --port=80
+  523  kubectl expose deploy nginxsvc
+  524  kubectl get all 
+  525  kubectl get all --selector app=nginxsvc
+  526  kubectl edit svc nginxsvc 
+  527  kubectl create ingress -h
+  528  kubectl create ingress nginxsvc --class=nginx --rule=nginxsvc.info/*=nginxsvc:80
+  529  kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 8080:80
+  530  bg
+  531  sudo vim /etc/hosts
+  532  curl nginxsvc.info
+  533  curl nginxsvc.info:8080
+  534  kubectl describe ingress nginxsvc 
+  535  kubectl edit svc nginxsvc 
+  536  kubectl describe ingress nginxsvc 
+  537  history
+

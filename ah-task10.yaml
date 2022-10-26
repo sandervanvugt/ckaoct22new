@@ -1,0 +1,33 @@
+1- k create role  viewers --verb=watch,list,get --resource=pods -n roles
+ 
+2- k create serviceaccount view-pods -n roles
+ 
+3- k run viewpod --image nginx -n roles --dry-run=client -o yaml > view-pod.yaml
+ 
+ 
+modify the YAML and add the serviceaccount
+ 
+[ahmedhagag@ahmeds-MacBook-Pro ~]$ cat view-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: viewpod
+  name: viewpod
+  namespace: roles
+spec:
+  serviceAccountName: view-pods
+  containers:
+  - image: nginx
+    name: viewpod
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+ 
+ 
+ 
+ 
+4- k create -f view-pod.yaml -n roles
+5-k create rolebinding read-pods --role=viewers --serviceaccount=roles:view-pods

@@ -1,0 +1,313 @@
+    1  cd cka
+    2  ./counter.sh 18
+    3  sudo apt install git vim -y
+    4  git clone https://github.com/sandervanvugt/cka
+    5  cd cka
+    6  ls
+    7  sudo ./setup-container.sh
+    8  sudo ./setup-kubetools.sh 
+    9  sudo kubeadm init
+   10  vim setup.txt
+   11  mkdir -p $HOME/.kube
+   12  kubectl get all
+   13  kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+   14  kubectl get all -n kube-system
+   15  kubectl get nodes
+   16  history
+   17  vim workersteps.txt
+   18  cat workersteps.txt 
+   19  ./counter.sh 5
+   20  kubectl create ns mynamespace
+   21  kubectl run task2 --image=alpine -n mynamespace --dry-run=client -o yaml -- sleep 3600 > task2.yaml
+   22  vim task2.yaml 
+   23  kubectl explain pod.spec | less
+   24  kubectl create -f task2.yaml 
+   25  kubectl get pods -n mynamespace
+   26  source <(kubectl completion bash)
+   27  history
+   28  ./counter.sh 5
+   29  history
+   30  cp task2.yaml task3.yaml
+   31  vim task3.yaml 
+   32  kubectl create -f task3.yaml 
+   33  kubectl get pods
+   34  kubectl delete -f task3.yaml 
+   35  vim task3.yaml 
+   36  kubectl create -f task3.yaml 
+   37  kubectl get pods
+   38  kubectl describe pod task3 
+   39  ./counter.sh 5
+   40  vim task4.yaml
+   41  kubectl create -f task4.yaml 
+   42  kubectl get pods
+   43  kubectl describe pods task4
+   44  kubectl delete -f task4.yaml 
+   45  vim task4.yaml 
+   46  kubectl create -f task4.yaml 
+   47  vim task4.yaml 
+   48  kubectl create -f task4.yaml 
+   49  kubectl get pods
+   50  ./counter.sh 13
+   51  kubectl create deployment nginx-ex5 --image=nginx --replicas=2
+   52  kubectl scale deployment nginx-ex5 --image=4
+   53  kubectl scale deployment nginx-ex5 --images=4
+   54  kubectl scale deployment nginx-ex5 --replicas=4
+   55  kubectl get all
+   56  ./counter.sh 10
+   57  vim task6.yaml
+   58  kubectl create -f task6.yaml 
+   59  kubectl get pods
+   60  kubectl expose -h | less
+   61  #  kubectl expose pod valid-pod --port=444 --name=frontend --type=NodePort
+   62  kubectl get pods
+   63  kubectl expose pod two-containers --port=80 --name=sidecar --type=NodePort
+   64  kubectl label pods two-containers lab=task6
+   65  kubectl expose pod two-containers --port=80 --name=sidecar --type=NodePort
+   66  kubectl get svc
+   67  curl 192.168.29.40:30453
+   68  kubectl get endpoints
+   69  kubectl describe pod two-containers 
+   70  vim task6-original.yaml
+   71  kubectl create -f task6-original.yaml 
+   72  vim task6-original.yaml
+   73  kubectl create -f task6-original.yaml 
+   74  kubectl get pods 
+   75  kubectl delete -f task6-original.yaml 
+   76  kubectl delete -f task6.yaml 
+   77  vim task6.yaml 
+   78  kubectl create -f task6.yaml 
+   79  kubectl get pods 
+   80  kubectl get endpoints
+   81  kubectl delete svc sidecar 
+   82  history
+   83  kubectl label pods two-containers lab=task6
+   84  kubectl expose pod two-containers --port=80 --name=sidecar --type=NodePort
+   85  kubectl get endpoints
+   86  kubectl get svc
+   87  curl 192.168.29.40:30829
+   88  history
+   89  vim cf6.yaml
+   90  kubectl create -f cf6.yaml 
+   91  kubectl get svc
+   92  kubectl get endpoints
+   93  kubectl create quota -h
+   94  kubectl create quota -h | less
+   95  kubectl create quota qtest --hard pods=3,cpu=100m,memory=500Mi --namespace=limited
+   96  kubectl create ns limites
+   97  kubectl create ns limited
+   98  kubectl create quota qtest --hard pods=3,cpu=100m,memory=500Mi --namespace=limited
+   99  kubectl describe ns limited
+  100  kubectl create deploy nginx --image=nginx --replicas=3 -n limited
+  101  kubectl get all -n limited
+  102  kubectl describe -n limited replicasets.apps nginx-76d6c9b8c 
+  103  kubectl set resources -h | less
+  104  kubectl set resources deploy nginx --requests cpu=100m,memory=5Mi --limits cpu=200m,memory=20Mi -n limited
+  105  kubectl get pods -n limited
+  106  kubectl get all -n limited
+  107  kubectl describe ns limited
+  108  kubectl create quota qtest --hard pods=3,cpu=1000m,memory=500Mi --namespace=limited
+  109  kubectl edit quota qtest -n limited
+  110  kubectl describe ns limited
+  111  kubectl delete quota qtest
+  112  kubectl delete quota qtest -n limited
+  113  kubectl create quota qtest --hard pods=3,cpu=1000m,memory=500Mi --namespace=limited
+  114  kubectl describe ns limited
+  115  kubectl scale deploy -n limited nginx --replicas=2
+  116  kubectl scale deploy -n limited nginx --replicas=3
+  117  kubectl describe ns limited
+  118  history
+  119  ./counter.sh 22
+  120  kubectl get roles
+  121  kubectl get roles -A
+  122  kubectl get roles -n kube-system kube-proxy
+  123  kubectl get roles -n kube-system kube-proxy -o yaml
+  124  kubectl api-resources | grep role
+  125  kubectl get rolebindings -A
+  126  kubectl get -n kube-system kube-proxy -o yaml
+  127  kubectl get -n kube-system rolebindings kube-proxy -o yaml
+  128  kubectl get clusterroles -A
+  129  kubectl get -n kube-system clusterroles calico-node -o yaml
+  130  kubectl get -n kube-system clusterrolebindings.rbac.authorization.k8s.io calico-node -o yaml
+  131  kubectl get sa
+  132  kubectl get sa -n kube-system | less
+  133  kubectl get pods -n kube-system
+  134  kubectl get -n kube-system pod calico-node-7jkx2 -o yaml | less
+  135  kubectl create sa blah 
+  136  kubectl get ns
+  137  kubectl config view
+  138  kubectl explain rolebindings.spec.subject.kind
+  139  kubectl explain rolebindings.spec
+  140  kubectl explain rolebindings.subjects
+  141  kubectl explain rolebindings.subjects.kind
+  142  ./counter.sh 1
+  143  ./counter.sh 10
+  144  vim az-task10.yaml
+  145  kubectl create ns roles
+  146  kubectl create -f az-task10.yaml 
+  147  kubectl get all -n roles
+  148  kubectl get pods,roles,rolebindings,serviceaccounts -n roles
+  149  kubectl get pods test -o yaml
+  150  kubectl get pods test -o yaml -n roles
+  151  vim ah-task10.yaml
+  152  kubectl create roles -h
+  153  kubectl create roles -h | less
+  154  kubectl create role -h | less
+  155  vim pt-task10.yaml
+  156  for i in *yaml; do cat $i; done
+  157  for i in *yaml; do echo ###PRINTING $1 #####; cat $i; done
+  158  for i in *yaml; do echo ###PRINTING $1 #####&& cat $i; done
+  159  for i in *yaml; do echo PRINTING $1 && cat $i; done
+  160  kubectl cordon -h | less
+  161  kubectl drain -h | less
+  162  kubectl drain worker2 --force --ignore-daemonsets
+  163  kubectl drain worker2 --force --ignore-daemonsets --delete-emptydir-data
+  164  kubectl get pods
+  165  kubectl get nodes
+  166  kubectl get nodes worker2 -o yaml | less
+  167  kubectl uncordon worker2
+  168  kubectl get nodes
+  169  kubectl get pods
+  170  kubectl get nodes
+  171  kubectl get pods -n roles --as=system:serviceaccount:roles:mysa
+  172  kubectl get pods -n roles
+  173  kubectl run blah --image=nginx -n roles
+  174  kubectl get pods -n roles --as=system:serviceaccount:roles:mysa
+  175  vim task11.yaml
+  176  kubectl create -f task11.yaml 
+  177  kubectl get all
+  178  kubectl edit deployments.apps 
+  179  kubectl delete deploy nginx-ds
+  180  kubectl delete deploy nginx-ex5
+  181  kubectl create -f /tmp/kubectl-edit-3514630143.yaml 
+  182  vim /tmp/kubectl-edit-3514630143.yaml 
+  183  kubectl create -f /tmp/kubectl-edit-3514630143.yaml 
+  184  kubectl create service nodeport -h | less
+  185  kubectl get ds nginx-ds -o yaml
+  186  kubectl create deploy dummy --image=nginx 
+  187  kubectl expose deploy dummy --port=80 --dry-run=client -o yaml >daemondymmy.yaml
+  188  vim daemondymmy.yaml 
+  189  kubectl create -f daemondymmy.yaml 
+  190  kubectl get endpoints
+  191  history
+  192  ./counter.sh 10
+  193  vim az-task8.yaml
+  194  kubectl create -f az-task8.yaml 
+  195  kubectl get pv,pvc -n myvol
+  196  kubectl describe pod pv-pod -n myvol
+  197  kubectl edit --help | less
+  198  kubectl edit --save-confi=true -n myvol pvc/mypvc
+  199  kubectl edit --save-config=true -n myvol pvc/mypvc
+  200  kubectl replace -f /tmp/kubectl-edit-2988670399.yaml
+  201  kubectl delete -f /tmp/kubectl-edit-2988670399.yaml 
+  202  vim az-take2-task8.yaml
+  203  kubectl create -f az-take2-task8.yaml 
+  204  kubectl edit -n myvol pvc mypvc 
+  205  kubectl create ns nwp-namespace
+  206  vim nwp-lab11-1.yaml 
+  207  kubectl create -f nwp-lab11-1.yaml 
+  208  kubectl expose pod nwp-nginx --port=80
+  209  kubectl exec -it nwp-busybox -n nwp-namespace -- nslookup nwp-nginx
+  210  kubectl exec -it nwp-busybox -n nwp-namespace -- nslookup nwp-nginx.default.svc.cluster.local
+  211  kubectl exec -it nwp-busybox -n nwp-namespace -- wget --spider --timeout=1 nwp-nginx.default.svc.cluster.local
+  212  vim nwp-lab11-2.yaml 
+  213  kubectl create -f nwp-lab11-2.yaml 
+  214  kubectl exec -it nwp-busybox -n nwp-namespace -- wget --spider --timeout=1 nwp-nginx.default.svc.cluster.local
+  215  kubectl create deploy busybox --image=busybox -- sleep 3600
+  216  kubectl exec -it busybox-5d86bf7994-4pthw -- wget --spider --timeout=1 nwp-nginx
+  217  kubectl delete -f nwp-lab11-2.yaml
+  218  vim nwp-lab11-2.yaml 
+  219  kubectl create -f nwp-lab11-2.yaml
+  220  kubectl exec -it nwp-busybox -n nwp-namespace -- wget --spider --timeout=1 nwp-nginx.default.svc.cluster.local
+  221  kubectl delete -f nwp-lab11-2.yaml
+  222  vim nwp-lab11-2.yaml 
+  223  kubectl create -f nwp-lab11-2.yaml
+  224  vim nwp-lab11-2.yaml 
+  225  kubectl create -f nwp-lab11-2.yaml
+  226  kubectl exec -it nwp-busybox -n nwp-namespace -- wget --spider --timeout=1 nwp-nginx.default.svc.cluster.local
+  227  kubectl get ns
+  228  kubectl get ns --show-labels
+  229  vim nwp-lab11-2.yaml 
+  230  kubectl get pods -n nwp-namespace --show-labels
+  231  kubectl label -n nwp-namespace pod/nwp-busybox app=sleepy
+  232  kubectl label -n nwp-namespace pod/nwp-busybox app=busy
+  233  kubectl label -n nwp-namespace pod/nwp-busybox app=busy --overwrite
+  234  kubectl exec -it nwp-busybox -n nwp-namespace -- wget --spider --timeout=1 nwp-nginx.default.svc.cluster.local
+  235  kubectl get pods -n nwp-namespace --show-labels
+  236  kubectl get nwp 
+  237  kubectl get networkpolicy
+  238  kubectl get networkpolicy -o yaml
+  239  kubectl delete -f nwp-lab11-2.yaml
+  240  vim nwp-lab11-2.yaml 
+  241  kubectl create -f nwp-lab11-2.yaml
+  242  kubectl exec -it nwp-busybox -n nwp-namespace -- wget --spider --timeout=1 nwp-nginx.default.svc.cluster.local
+  243  ./counter.sh 15
+  244  kubectl edit ns nwp-namespace
+  245  kubectl delete -f nwp-lab11-2.yaml
+  246  vim nwp-lab11-2.yaml 
+  247  kubectl create -f nwp-lab11-2.yaml 
+  248  kubectl exec -it nwp-busybox -n nwp-namespace -- wget --spider --timeout=1 nwp-nginx.default.svc.cluster.local
+  249  kubectl edit ns nwp-namespace
+  250  vim nwp-lab11-2.yaml 
+  251  ./counter.sh 7
+  252  vim az-task12.yaml
+  253  sudo apt install etcd-client
+  254  sudo etcdctl --help
+  255  sudo ETCDCTL=3 etcdctl --help
+  256  ps aux | grep etcd
+  257  sudo ETCDCTL_API=3 etcdctl --help
+  258  sudo ETCDCTL_API=3 etcdctl --endpoints=localhost:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key get / --prefix --keys-only
+  259  sudo ETCDCTL_API=3 etcdctl --endpoints=localhost:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /tmp/etcdbackup.db
+  260  ls -l /tmp/etcdbackup.db 
+  261  sudo ETCDCTL_API=3 etcdctl --write-out=table /tmp/etcdbackup.db
+  262  sudo ETCDCTL_API=3 etcdctl --write-out=table snapshot status /tmp/etcdbackup.db
+  263  kubectl get deploy
+  264  kubectl delete deploy busybox
+  265  kubectl delete deploy dummy
+  266  sudo ETCDCTL_API=3 etcdctl snapshot restore /tmp/etcdbackup.db 
+  267  ls
+  268  ls -l default.etcd/
+  269  sudo ls -l default.etcd/
+  270  sudo -i
+  271  kubectl get all
+  272  kubectl get deploy
+  273  sudo -i
+  274  kubectl get all
+  275  sudo reboot
+  276  kubectl get all
+  277  cd cka
+  278  ./counter.sh 12
+  279  ls -l /tmp/et
+  280  ls -l /tmp/et*
+  281  sudo -i
+  282  kubectl get all
+  283  ls
+  284  ip a
+  285  mkdir newstuff
+  286  vim update-clusternode-history.txt
+  287  cd cka
+  288  ./counter.sh 5
+  289  kubectl run mydb --image=mariadb
+  290  kubectl get mydb
+  291  kubectl get pods mydb
+  292  kubectl describe pod mydb
+  293  kubectl get pods mydb
+  294  kubectl get pods -n kube-system
+  295  kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+  296  kubectl get pods -n kube-system
+  297  kubectl describe -n kube-system pod calico-node-4vwqr
+  298  sudo reboot
+  299  source <(kubectl completion bash)
+  300  kubectl get all
+  301  kubectl get pods -n kube-system 
+  302  kubectl logs -n kube-system calico-node-4vwqr 
+  303  kubectl logs -n kube-system calico-node-4vwqr -c upgrade-ipam
+  304  kubectl logs -n kube-system calico-node-4vwqr -c install-cni
+  305  ip a
+  306  kubectl edit node control 
+  307  df -h
+  308  ls
+  309  cd newstuff/
+  310  mv ../update-clusternode-history.txt .
+  311  vim newnode-history.txt
+  312  history
+
